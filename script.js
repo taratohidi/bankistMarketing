@@ -1,7 +1,7 @@
 'use strict';
 
 ///////////////////////////////////////
-// Modal window
+// Select elements
 
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
@@ -10,6 +10,8 @@ const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
+///////////////////////////////////////
+// Modal window
 const openModal = function (event) {
   event.preventDefault();
   modal.classList.remove('hidden');
@@ -36,3 +38,24 @@ document.addEventListener('keydown', function (e) {
 btnScrollTo.addEventListener('click', function (e) {
   section1.scrollIntoView({ behavior: 'smooth' });
 });
+
+///////////////////////////////////////
+// Page navigation
+document.querySelectorAll('.nav__link').forEach(el => {
+  el.addEventListener('click', e => {
+    // console.log('Link');
+    e.preventDefault();
+    // Matching strategy
+    if (e.target.classList.contains('nav__link')) {
+      const id = e.target.getAttribute('href');
+      document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+
+/*Random color
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+
+const randomColor = () =>
+  `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`; */
