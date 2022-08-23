@@ -14,6 +14,7 @@ const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
 const nav = document.querySelector('.nav');
 const header = document.querySelector('.header');
+const allSection = document.querySelectorAll('.section');
 
 ///////////////////////////////////////
 // Modal window
@@ -103,7 +104,7 @@ nav.addEventListener('mouseout', e => {
 });
 
 ///////////////////////////////////////
-// Sticky Navigation
+///// Sticky Navigation
 
 // const initialCoords = section1.getBoundingClientRect();
 // window.addEventListener('scroll', e => {
@@ -115,7 +116,8 @@ nav.addEventListener('mouseout', e => {
 // });
 
 ///////////////////////////////////////
-// Sticky Navigation: Intersection Observer API
+///// Sticky Navigation: Intersection Observer API
+
 // const obsCallback = function (entries, observer) {
 //   entries.forEach(entry => {});
 // };
@@ -142,6 +144,25 @@ const headerObserver = new IntersectionObserver(stickyNav, {
   rootMargin: `-${navHeight}px`,
 });
 headerObserver.observe(header);
+
+///////////////////////////////////////
+///// Reveal Section
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+};
+const SectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
+allSection.forEach(section => {
+  SectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
+
 /*Random color
 const randomInt = (min, max) =>
   Math.floor(Math.random() * (max - min + 1) + min);
